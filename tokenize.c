@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "main.h"
 /**
 * tokenize - creates array of tokens based on user string
 * @buffer: pointer to user string
