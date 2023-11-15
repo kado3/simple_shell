@@ -1,15 +1,39 @@
 #include "shell.h"
 /**
- * main - func with infinite loop
- * @ac: No use
- * @av: No use
- * Return: loop.
- **/
-int main(int ac, char **av)
+* main - runs the shell program
+*
+* Return: 0 on success
+*/
+int main(void)
 {
-(void)av;
-(void)ac;
-signal(SIGINT, controlC);
+char *fullpathbuffer = NULL, *copy = NULL, *buffer = NULL;
+char *PATH = NULL;
+char **av;
+int exitstatus = 0;
+signal(SIGINT, SIG_IGN);
+PATH = _getenv("PATH");
+if (PATH == NULL)
+return (-1);
+while (1)
+{
+av = NULL;
 prompt();
+buffer = _read();
+if (*buffer != '\0')
+{
+av = tokenize(buffer);
+if (av == NULL)
+{
+free(buffer);
+continue;
+}
+fullpathbuffer = _fullpathbuffer(av, PATH, copy);
+if (checkbuiltins(av, buffer, exitstatus) == 1)
+continue;
+exitstatus = _forkprocess(av, buffer, fullpathbuffer);
+}
+else
+free(buffer);
+}
 return (0);
 }
