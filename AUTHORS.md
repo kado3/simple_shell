@@ -1,1 +1,0 @@
-Kofi Owusu-Peprah
