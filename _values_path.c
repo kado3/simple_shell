@@ -1,4 +1,4 @@
-V=#include "shell.h"
+#include "shell.h"
 /**
 * _values_path - separate the path in new strings.
 * @arg: command input of user.
