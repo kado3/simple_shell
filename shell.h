@@ -1,36 +1,34 @@
-#ifndef _SHELL_H_
-#define _SHELL_H_
+#ifndef SHELL_H
+#define SHELL_H
+#define _GNU_SOURCE
 
-#include <stddef.h>
-#include <signal.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
+#include <errno.h>
 
-#include "typedefs.h"
-#include "constants.h"
-
-
-/* global environemnt */
 extern char **environ;
-/* global program name */
-char *name;
-/* global aliases linked list */
-alias_t *aliases;
 
-/* signals and processes */
-void signal_handler(int);
+int _strcmp(char *s1, char *s2);
+size_t _strncmp(char *s1, char *s2, size_t n);
+int _strlen(char *s);
+char *_strcpy(char *dest, char *src);
+char *_strcat(char *dest, char *src);
+int _putchar(char c);
 
-/* helpers for user inputs */
-char *get_user_input();
+char *_get_path(char **env);
+int _values_path(char **arg, char **env);
+char *_getline_command(void);
+void _getenv(char **env);
+char **_get_token(char *lineptr);
+void _exit_command(char **args, char *lineptr, int _exit);
+int _fork_fun(char **arg, char **av, char **env,
+char *lineptr, int np, int c);
+char *_strtok(char *str, const char *delim);
 
-/* helpers errors handling */
-/* 0 : readline_error */
-void readline_error(void);
 
-void (*handle_error[])(void) = {
-    readline_error
-};
-
-#endif /* _SHELL_H_ */
+#endif /* SHELL_H */
